@@ -3,25 +3,24 @@ using TMPro;
 
 public class GemManager : MonoBehaviour
 {
-    public GameObject gemPrefab;        // Assign the original gem prefab in the inspector
-    public int totalGems = 8;           // Total gems to spawn and collect
-    public float spawnRadius = 5000f;   // Radius within which to spawn gems
-    public TextMeshProUGUI gemCounter;  // Text to show the number of gems collected
+    public GameObject gemPrefab;         // Assign the original gem prefab in the inspector
+    public int totalGems = 8;            // Total gems to spawn and collect
+    public float spawnRadius = 5000f;    // Radius within which to spawn gems
+    public TextMeshProUGUI gemCounter;   // Text to show the number of gems collected
+    public GameObject winScreen;         // Assign the win screen UI in the inspector
 
-    private int collectedGems = 0;      // Track collected gems
+    private int collectedGems = 0;       // Track collected gems
 
     void Start()
     {
-        // Spawn gems around the map
         SpawnGems();
-
-        // Initialize gem counter display
         UpdateGemCounter();
+        winScreen.SetActive(false);      // Hide win screen initially
     }
 
     void SpawnGems()
     {
-        // Duplicate the gemPrefab `totalGems` times
+        // Spawn the gemPrefab `totalGems` times
         for (int i = 0; i < totalGems; i++)
         {
             Vector3 spawnPosition = GetRandomGroundPosition();
@@ -31,12 +30,9 @@ public class GemManager : MonoBehaviour
 
     Vector3 GetRandomGroundPosition()
     {
-        // Generate a random position within a circular area centered on the GemManager’s position
+        // Generate a random position within the spawn radius and retain the gem's original Y position
         Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
-        Vector3 randomPosition = new Vector3(randomCircle.x, 0, randomCircle.y) + transform.position;
-
-        // Adjust Y position to the ground level (Y=0 or the specific ground level)
-        randomPosition.y = gemPrefab.transform.position.y; // Use the Y position of the original gem prefab
+        Vector3 randomPosition = new Vector3(randomCircle.x, gemPrefab.transform.position.y, randomCircle.y) + transform.position;
         return randomPosition;
     }
 
@@ -45,7 +41,6 @@ public class GemManager : MonoBehaviour
         collectedGems++;
         UpdateGemCounter();
 
-        // Check for win condition
         if (collectedGems >= totalGems)
         {
             WinGame();
@@ -55,12 +50,12 @@ public class GemManager : MonoBehaviour
     private void UpdateGemCounter()
     {
         // Update the TextMeshPro counter with collected gems
-        gemCounter.text = "Gems: " + collectedGems + " / " + totalGems;
+        gemCounter.text = $"Gems: {collectedGems} / {totalGems}";
     }
 
     private void WinGame()
     {
         Debug.Log("Congratulations! You've collected all gems and won the game!");
-        // Additional win logic (e.g., show win screen) can be added here
+        winScreen.SetActive(true);      // Display the win screen
     }
 }
