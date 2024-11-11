@@ -8,5 +8,6 @@ Survival Game on Unity
 * Player has to find 4 gems.
 * Unlock the portal to the final world.
 * Player has to find 4 gems.
+* Unlock the portal to beat the game.
 
 
