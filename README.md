@@ -7,5 +7,6 @@ Survival Game on Unity
 * Unlock the portal to go to the desert world with Zombie enemies.
 * Player has to find 4 gems.
 * Unlock the portal to the final world.
+* Player has to find 4 gems.
 
 
