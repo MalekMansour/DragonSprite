@@ -20,7 +20,6 @@ public class GemManager : MonoBehaviour
 
     void SpawnGems()
     {
-        // Spawn the gemPrefab `totalGems` times
         for (int i = 0; i < totalGems; i++)
         {
             Vector3 spawnPosition = GetRandomGroundPosition();
@@ -30,10 +29,16 @@ public class GemManager : MonoBehaviour
 
     Vector3 GetRandomGroundPosition()
     {
-        // Generate a random position within the spawn radius and retain the gem's original Y position
         Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
-        Vector3 randomPosition = new Vector3(randomCircle.x, gemPrefab.transform.position.y, randomCircle.y) + transform.position;
-        return randomPosition;
+        Vector3 randomPosition = new Vector3(randomCircle.x, 0, randomCircle.y) + transform.position;
+
+        // Raycast downward to find the ground level at the random position
+        if (Physics.Raycast(randomPosition + Vector3.up * 1000, Vector3.down, out RaycastHit hit, 2000f))
+        {
+            return hit.point; // Ground position
+        }
+
+        return randomPosition; // Fallback if no ground detected
     }
 
     public void CollectGem()
