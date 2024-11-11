@@ -5,7 +5,7 @@ public class GemManager : MonoBehaviour
 {
     public GameObject gemPrefab;         // Assign the original gem prefab in the inspector
     public int totalGems = 8;            // Total gems to spawn and collect
-    public float spawnRadius = 5000f;    // Radius within which to spawn gems
+    public float spawnRadius = 500f;    // Radius within which to spawn gems
     public TextMeshProUGUI gemCounter;   // Text to show the number of gems collected
     public GameObject winScreen;         // Assign the win screen UI in the inspector
 
