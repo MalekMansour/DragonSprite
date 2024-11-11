@@ -2,25 +2,30 @@ using UnityEngine;
 
 public class GemManager : MonoBehaviour
 {
-    public GameObject gemPrefab;  // Assign the gem prefab in the inspector
-    public int totalGems = 8;     // Total number of gems to collect
-    public Transform[] spawnPoints;  // Array of spawn points for the gems
-    private int collectedGems = 0;   // Track collected gems
+    public GameObject gemPrefab;    // Assign the gem prefab in the inspector
+    public int totalGems = 8;       // Total number of gems to collect
+    public float spawnRadius = 5000f;  // Radius within which gems will spawn
+    private int collectedGems = 0;     // Track collected gems
 
     void Start()
     {
-        // Check if we have enough spawn points
-        if (spawnPoints.Length < totalGems)
-        {
-            Debug.LogError("Not enough spawn points for the gems!");
-            return;
-        }
+        SpawnGems();
+    }
 
-        // Spawn the gems at specified spawn points
+    void SpawnGems()
+    {
         for (int i = 0; i < totalGems; i++)
         {
-            Instantiate(gemPrefab, spawnPoints[i].position, Quaternion.identity);
+            Vector3 spawnPosition = GetRandomPosition();
+            Instantiate(gemPrefab, spawnPosition, Quaternion.identity);
         }
+    }
+
+    Vector3 GetRandomPosition()
+    {
+        // Generate a random position within a circular area centered on the GemManager’s position
+        Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
+        return new Vector3(randomCircle.x, 0, randomCircle.y) + transform.position;
     }
 
     public void CollectGem()
