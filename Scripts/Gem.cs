@@ -9,10 +9,16 @@ public class Gem : MonoBehaviour
         gemManager = FindObjectOfType<GemManager>();
     }
 
+    void Update()
+    {
+        // Prevent any unintended rotation
+        transform.rotation = Quaternion.identity;
+    }
+
     void OnMouseOver()
     {
-        // If the player right-clicks, collect the gem
-        if (Input.GetMouseButtonDown(1))
+        // Collect the gem on left-click
+        if (Input.GetMouseButtonDown(0))
         {
             gemManager.CollectGem();
             Destroy(gameObject);  // Remove the gem from the scene
