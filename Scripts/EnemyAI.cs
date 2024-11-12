@@ -2,17 +2,16 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float idleSpeed = 2f;
-    public float chaseSpeed = 4f;
+    public float idleSpeed = 4f;
+    public float chaseSpeed = 10f;
     public float detectionRadius = 16f;
-    public float damagePerSecond = 5f;
-    public float wanderRadius = 10f;
-    public float wanderTime = 3f;
-    public float rotationSpeed = 5f; // Speed at which the enemy rotates towards the player
+    public float damagePerSecond = 10f;
+    public float wanderRadius = 32f;
+    public float wanderTime = 5f;
+    public float rotationSpeed = 5f; 
 
     private Transform player;
     private bool isChasing = false;
-    private float attackTimer = 0f;
     private Vector3 wanderTarget;
     private float wanderTimer;
 
@@ -54,16 +53,6 @@ public class EnemyAI : MonoBehaviour
 
         // Move towards the player
         transform.position = Vector3.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
-
-        // Check if the enemy is close enough to attack the player
-        if (Vector3.Distance(transform.position, player.position) < 1.5f)
-        {
-            AttackPlayer();
-        }
-        else
-        {
-            attackTimer = 0f;
-        }
     }
 
     void Wander()
@@ -102,16 +91,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void AttackPlayer()
+    void OnTriggerStay(Collider other)
     {
-        attackTimer += Time.deltaTime;
-        if (attackTimer >= 1f)
+        // Check if the collider belongs to the player
+        if (other.CompareTag("Player"))
         {
-            attackTimer = 0f;
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(damagePerSecond);
+                // Inflict damage continuously as long as the enemy collides with the player
+                playerHealth.TakeDamage(damagePerSecond * Time.deltaTime);
             }
         }
     }
