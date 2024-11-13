@@ -11,8 +11,10 @@ public class Gem : MonoBehaviour
 
     void OnMouseDown()
     {
-        // Collect the gem on left-click
-        gemManager.CollectGem();
-        Destroy(gameObject);  // Remove the gem from the scene
+        if (gemManager != null)
+        {
+            gemManager.CollectGem();
+            Destroy(gameObject);  // Remove gem from the scene after collection
+        }
     }
 }
