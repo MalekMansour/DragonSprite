@@ -3,8 +3,8 @@ using UnityEngine;
 public class EnemyMultiplier : MonoBehaviour
 {
     public GameObject enemyPrefab;      // The original enemy prefab
-    public int numberOfEnemies = 20;    // Number of enemies to spawn
-    public float spawnRange = 50f;      // Range for enemy spawning
+    public int numberOfEnemies = 10;    // Number of enemies to spawn
+    public float spawnRange = 500f;      // Range for enemy spawning
 
     private bool hasSpawned = false;    // Flag to prevent multiple spawn calls
 
