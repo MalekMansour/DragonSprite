@@ -57,7 +57,6 @@ public class EnemyAI : MonoBehaviour
 
     void Wander()
     {
-        // Update wander target if timer has reached zero
         wanderTimer -= Time.deltaTime;
         if (wanderTimer <= 0)
         {
