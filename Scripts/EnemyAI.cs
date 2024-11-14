@@ -68,8 +68,6 @@ public class EnemyAI : MonoBehaviour
         Vector3 directionToTarget = (wanderTarget - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToTarget.x, 0, directionToTarget.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-        // Move towards the wander target
         transform.position = Vector3.MoveTowards(transform.position, wanderTarget, idleSpeed * Time.deltaTime);
     }
 
