@@ -73,12 +73,10 @@ public class EnemyAI : MonoBehaviour
 
     void SetRandomWanderTarget()
     {
-        // Set a random target within the wander radius around the enemy's current position
         float randomX = Random.Range(-wanderRadius, wanderRadius);
         float randomZ = Random.Range(-wanderRadius, wanderRadius);
         wanderTarget = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        // Keep the enemy on the "terrain" by clamping the target to the terrain bounds
         GameObject terrain = GameObject.Find("terrain");
         if (terrain != null)
         {
@@ -90,13 +88,11 @@ public class EnemyAI : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        // Check if the collider belongs to the player
         if (other.CompareTag("Player"))
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                // Inflict damage continuously as long as the enemy collides with the player
                 playerHealth.TakeDamage(damagePerSecond * Time.deltaTime);
             }
         }
