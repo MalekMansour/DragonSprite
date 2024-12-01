@@ -9,3 +9,6 @@ Survival Game on Unity
 * Player has to find 8 souls to win the game.
 
 
+## Changes
+- Make the Soul Counter Work
+- Add a proper Game Over
